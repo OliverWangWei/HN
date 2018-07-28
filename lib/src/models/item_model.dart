@@ -28,4 +28,5 @@ class ItemModel {
         score = parsedJson['score'],
         title = parsedJson['title'],
         descendants = parsedJson['descendants'];
+
 }
