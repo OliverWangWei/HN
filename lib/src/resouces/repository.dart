@@ -32,7 +32,7 @@ class Repository {
       }
     }
 
-    // put the item into
+    // put the item into Db
     for (var cache in caches) {
       try {
         source as NewsDbProvider;
@@ -47,11 +47,15 @@ class Repository {
 }
 
 abstract class Source {
+  
   Future<List<int>> fetchTopIds();
 
   Future<ItemModel> fetchItem(int id);
+  
 }
 
 abstract class Cache {
+
   Future<int> addItem(ItemModel item);
+  
 }
