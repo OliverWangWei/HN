@@ -62,5 +62,4 @@ class ItemModel {
       "kids": jsonEncode(kids),
     };
   }
-
 }
