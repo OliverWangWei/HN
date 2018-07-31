@@ -5,7 +5,7 @@ import 'dart:convert';
 import '../models/item_model.dart';
 import 'repository.dart';
 
-final _root = 'https://hacker-news.firebaseiox.com/v0';
+final _root = 'https://hacker-news.firebaseio.com/v0';
 
 class NewsApiProvider implements Source {
   Client client = Client();
