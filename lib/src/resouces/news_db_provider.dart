@@ -27,7 +27,7 @@ class NewsDbProvider implements Source, Cache {
     final path = join(documentsDirectory.path, "items.db");
 
     db = await openDatabase(
-      // top-level funciton
+      // top-level function
       path,
       version: 1,
       onCreate: (Database newDb, int version) {
