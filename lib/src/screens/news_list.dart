@@ -7,9 +7,7 @@ class NewList extends StatelessWidget {
       appBar: AppBar(
         title: Text('Top News'),
       ),
-      body: Center(
-        child: Text('Show some news here!'),
-      ),
+      body: Text('Show a list'),
     );
   }
 }
