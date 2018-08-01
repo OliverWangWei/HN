@@ -23,10 +23,10 @@ class ItemModel {
         by = parsedJson['by'],
         text = parsedJson['text'] ?? '',
         time = parsedJson['time'],
-        dead = parsedJson['dead'] ?? false,
+        dead = parsedJson['dead'] ?? false, // if null then pass false
         parent = parsedJson['parent'],
         url = parsedJson['url'],
-        kids = parsedJson['kids'] ?? [],
+        kids = parsedJson['kids'] ?? [], // if null then pass empty list
         score = parsedJson['score'],
         title = parsedJson['title'],
         descendants = parsedJson['descendants'] ?? 0;

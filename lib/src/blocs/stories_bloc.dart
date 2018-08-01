@@ -34,10 +34,15 @@ class StoriesBloc {
     _topIds.sink.add(ids);
   }
 
+  clearCache() {
+    return _repository.clearCash();
+  }
+
   _itemsTransformer() {
     return ScanStreamTransformer(
       // cache hold the reference of map, it will persist over and over again
-      // _ is number of times that ScanStreamTransformer invoked
+      // index is number of times that ScanStreamTransformer invoked
+      // id is the event stream in transformer
       (Map<int, Future<ItemModel>> cache, int id, index) {
         print('$index');
         cache[id] = _repository.fetchItem(id);

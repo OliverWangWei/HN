@@ -5,41 +5,40 @@ import '../models/item_model.dart';
 import '../blocs/stories_provider.dart';
 import '../widgets/loading_container.dart';
 
-
 class NewsListTile extends StatelessWidget {
 
-// every list tile need to have the specific id to pull the ItemModel out in cache ma~p
+  // every list tile need to have the specific id to pull the corresponding ItemModel out in cache map
   final int itemId;
 
   NewsListTile({this.itemId});
 
   @override
   Widget build(BuildContext context) {
-
     final bloc = StoriesProvider.of(context);
 
     return StreamBuilder(
+      // listen to getItems stream and return FutureBuilder
+      // as long as it emits Map<int, Future<ItemModel>> event
       stream: bloc.getItems,
       builder: (context, AsyncSnapshot<Map<int, Future<ItemModel>>> snapshot) {
+        // before any event comes out
         if (!snapshot.hasData) {
           return LoadingContainer();
         }
 
         return FutureBuilder(
-          future: snapshot.data[itemId],
+          // listen to a future when a value return in some point of future the builder function is called
+          future: snapshot.data[itemId], // Future<ItemModel>
           builder: (context, AsyncSnapshot<ItemModel> itemSnapshot) {
-
             if (!itemSnapshot.hasData) {
               return LoadingContainer();
             }
-
+            // 返回ListTile
             return buildTile(itemSnapshot.data);
           },
         );
-
       },
     );
-
   }
 
   Widget buildTile(ItemModel item) {
@@ -61,5 +60,4 @@ class NewsListTile extends StatelessWidget {
       ],
     );
   }
-
 }
