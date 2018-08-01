@@ -1,12 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-//import 'package:news/src/blocs/stories_bloc.dart';
+import 'package:news/src/models/item_model.dart';
 import '../blocs/stories_provider.dart';
+import '../widgets/news_list_tile.dart';
 
 class NewList extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-
     final bloc = StoriesProvider.of(context);
 
     // bad code
@@ -23,21 +24,25 @@ class NewList extends StatelessWidget {
   Widget buildList(StoriesBloc bloc) {
     return StreamBuilder(
       stream: bloc.topIds,
-      builder: (context, snapshot) {
-
+      builder: (context, AsyncSnapshot<List<int>> snapshot) {
         if (!snapshot.hasData) {
-          return Text('Still waiting on Ids');
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         }
 
         return ListView.builder(
           itemCount: snapshot.data.length,
           itemBuilder: (context, int index) {
-            return Text('${snapshot.data[index]}');
+
+            bloc.fetchItemById.add(snapshot.data[index]);
+
+            return NewsListTile(
+              itemId: snapshot.data[index],
+            );
           },
         );
-
       },
-
     );
   }
 }

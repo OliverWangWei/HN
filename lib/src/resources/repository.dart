@@ -15,14 +15,14 @@ class Repository {
     newsDbProvider,
   ];
 
-  Future<List<int>> fetchTopIds() {
+  Future<List<int>> fetchTopIds () {
     return _sources[1].fetchTopIds();
   }
 
   Future<ItemModel> fetchItem(int id) async {
 
     ItemModel item;
-    Source source;
+    var source;
 
     // if there is a source has the item
     for (source in _sources) {
@@ -31,17 +31,21 @@ class Repository {
         // if u have then break else keep searching next source
         break;
       }
-      
+        
     }
 
     // put the item into Db
     for (var cache in _caches) {
 
-      try {
-        source as NewsDbProvider;
+//      try {
+//        source as NewsDbProvider;
+//        cache.addItem(item);
+//      } catch (e) {
+//        print(e);
+//      }
+
+      if (cache != source) {
         cache.addItem(item);
-      } catch (e) {
-        print(e);
       }
     }
 

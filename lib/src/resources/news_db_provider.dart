@@ -9,7 +9,6 @@ import '../models/item_model.dart';
 final newsDbProvider = NewsDbProvider();
 
 class NewsDbProvider implements Source, Cache {
-
   // import 'package:sqflite/sqflite.dart';
   Database db;
 
@@ -18,13 +17,12 @@ class NewsDbProvider implements Source, Cache {
   }
 
   Future<void> init() async {
-    
     // provide by path_provider package to get a path of folder on our mobile device
     // where we can save our data.
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
 
     // documentsDirectory.path/items.db
-    final path = join(documentsDirectory.path, "items.db");
+    final path = join(documentsDirectory.path, "items2.db");
 
     db = await openDatabase(
       // top-level function
@@ -35,8 +33,7 @@ class NewsDbProvider implements Source, Cache {
 
         /// BLOB allows us to store a big set of data
         newDb.execute("""
-          CREATE TABLE Items
-            (
+          CREATE TABLE Items (
               id INTEGER PRIMARY_KEY,
               type TEXT,
               by TEXT,
@@ -45,7 +42,7 @@ class NewsDbProvider implements Source, Cache {
               parent INTEGER,
               kids BLOB, 
               dead INTEGER, 
-              delete INTEGER,
+              deleted INTEGER,
               url TEXT,
               score INTEGER,
               title TEXT,
@@ -73,7 +70,11 @@ class NewsDbProvider implements Source, Cache {
   }
 
   Future<int> addItem(ItemModel item) {
-    return db.insert("Items", item.toMapForDb());
+    return db.insert(
+      "Items",
+      item.toMapForDb(),
+      conflictAlgorithm: ConflictAlgorithm.ignore
+    );
   }
 
   @override
