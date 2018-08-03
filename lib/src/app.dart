@@ -8,9 +8,14 @@ class App extends StatelessWidget {
     return StoriesProvider(
       child: MaterialApp(
         title: 'news!',
-        home: NewList(),
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(
+            builder: (context) {
+              return NewsList();
+            }
+          );
+        },
       ),
     );
   }
 }
-

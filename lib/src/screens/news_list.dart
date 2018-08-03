@@ -6,7 +6,7 @@ import '../blocs/stories_provider.dart';
 import '../widgets/news_list_tile.dart';
 import '../widgets/refresh.dart';
 
-class NewList extends StatelessWidget {
+class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
