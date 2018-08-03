@@ -25,7 +25,7 @@ class NewsList extends StatelessWidget {
 
   Widget buildList(StoriesBloc bloc) {
     return StreamBuilder(
-      stream: bloc.topIds,
+      stream: bloc.topIds, // listen this stream to fetch latest todIds
       builder: (context, AsyncSnapshot<List<int>> snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -34,9 +34,11 @@ class NewsList extends StatelessWidget {
         }
 
         return Refresh(
-          child: ListView.builder(
-            itemCount: snapshot.data.length,
-            itemBuilder: (context, int index) {
+          child: ListView.builder( // build listView
+            itemCount: snapshot.data.length, // the length of topIds
+            itemBuilder: (context, int index) { // iterates the topIds
+
+              // insert specific id into sink
               bloc.fetchItemById.add(snapshot.data[index]);
 
               return NewsListTile(

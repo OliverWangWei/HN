@@ -34,17 +34,24 @@ class NewsListTile extends StatelessWidget {
               return LoadingContainer();
             }
             // 返回ListTile
-            return buildTile(itemSnapshot.data);
+            return buildTile(context, itemSnapshot.data);
           },
         );
       },
     );
   }
 
-  Widget buildTile(ItemModel item) {
+  Widget buildTile(BuildContext context, ItemModel item) {
     return Column(
       children: <Widget>[
         ListTile(
+          onTap: () {
+            print('${item.id} was tapped!!!!');
+            //1. slash is not necessary here but it's good to distinguish
+            //2. As we call this static method, the on Generate routes callback will be invoked
+            // and the second argument will be wrapped into the settings which is the parameter of callback
+            Navigator.pushNamed(context, '/${item.id}');
+          },
           title: Text(item.title),
           subtitle: Text('${item.score} votes'),
           trailing: Column(
