@@ -19,13 +19,14 @@ class CommentsBloc {
   CommentsBloc() {
     _commentFetcher.stream
         .transform(_commentsTransformer())
-        .pipe(_commentFetcher);
+        .pipe(_commentsOutput);
   }
 
   _commentsTransformer() {
     // stream in with integer and stream out with Map<int, Future<ItemModel>>
     return ScanStreamTransformer<int, Map<int, Future<ItemModel>>>(
       (cache, int id, int index) {
+        print('$index recursive');
         // assign a future which returns by fetchItem to cache[id]
         cache[id] = _repository.fetchItem(id);
         // when future is resolved then then's callback will be invoked
