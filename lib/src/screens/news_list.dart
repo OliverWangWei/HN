@@ -13,7 +13,7 @@ class NewsList extends StatelessWidget {
     final bloc = StoriesProvider.of(context);
 
     // bad code : to invoke http request and add top ids
-    bloc.fetchTopIds();
+
 
     return Scaffold(
       appBar: AppBar(
