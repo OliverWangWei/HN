@@ -1,18 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../widgets/comment.dart';
 import '../models/item_model.dart';
 import '../blocs/comments_provider.dart';
 
 class NewsDetail extends StatelessWidget {
-
   final int itemId;
 
   NewsDetail({this.itemId});
 
   @override
   Widget build(BuildContext context) {
-
     final bloc = CommentsProvider.of(context);
 
     return Scaffold(
@@ -38,17 +37,31 @@ class NewsDetail extends StatelessWidget {
               return Text('Loading');
             }
 
-            return buildTitle(itemSnapshot.data);
-
+            return buildList(itemSnapshot.data, snapshot.data);
           },
         );
-
       },
+    );
+  }
+
+  Widget buildList(ItemModel item, Map<int, Future<ItemModel>> itemMap) {
+    final children = <Widget>[];
+    children.add(buildTitle(item));
+
+    final commentList = item.kids.map((kidId) {
+      // These're the top-level comments of this story
+      return Comment(itemId: kidId, itemMap: itemMap, depth: 1);
+    }).toList();
+
+    return ListView(
+      // to create a fix size of ListView
+      children: children + commentList,
     );
   }
 
   Widget buildTitle(ItemModel item) {
     return Container(
+      alignment: Alignment.topCenter,
       margin: EdgeInsets.all(15.0),
       child: Text(
         item.title,
