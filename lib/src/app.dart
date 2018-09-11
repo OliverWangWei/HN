@@ -19,31 +19,34 @@ class App extends StatelessWidget {
 
   Route _routes(RouteSettings settings) {
     if (settings.name == '/') {
-      return MaterialPageRoute(builder: (context) {
-        
-        final storiesBloc = StoriesProvider.of(context);
+      return MaterialPageRoute(
+        builder: (context) {
+          final storiesBloc = StoriesProvider.of(context);
 
-        //to invoke http request and add top ids
-        storiesBloc.fetchTopIds();
+          //to invoke http request and add top ids
+          storiesBloc.fetchTopIds();
 
-        return NewsList();
-      });
+          return NewsList();
+        },
+      );
     } else {
-      return MaterialPageRoute(builder: (context) {
-        // extract the item id from settings.name
-        // and pass into NewsDetail
-        // A fantastic location to do some initialization
-        // or data fetching for NewsDetail
+      return MaterialPageRoute(
+        builder: (context) {
+          // extract the item id from settings.name
+          // and pass into NewsDetail
+          // A fantastic location to do some initialization
+          // or data fetching for NewsDetail
 
-        final itemId = int.parse(settings.name.replaceFirst('/', ''));
+          final itemId = int.parse(settings.name.replaceFirst('/', ''));
 
-        final commentsBloc = CommentsProvider.of(context);
+          final commentsBloc = CommentsProvider.of(context);
 
-        // kicks off the entire recursive fetching comments
-        commentsBloc.fetchItemWithComments.add(itemId);
+          // kicks off the entire recursive fetching comments
+          commentsBloc.fetchItemWithComments.add(itemId);
 
-        return NewsDetail(itemId: itemId);
-      });
+          return NewsDetail(itemId: itemId);
+        },
+      );
     }
   }
 }
